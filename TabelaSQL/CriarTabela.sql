@@ -3,8 +3,8 @@ go
 use ApiUsers
 
 create table users (
-	id int primary key,
-	nome varchar(127) not null,
+	id int primary key identity(1,1),
+	name varchar(127) not null,
 	email varchar(127) not null,
 	password varchar(127) not null,
 	created_at datetime DEFAULT getdate() not null,
@@ -12,4 +12,5 @@ create table users (
 	)
 	go
 
+	select * from users
 
