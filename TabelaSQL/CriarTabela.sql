@@ -12,5 +12,4 @@ create table users (
 	)
 	go
 
-	select * from users
 
