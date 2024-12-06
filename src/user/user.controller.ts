@@ -1,10 +1,10 @@
 import { Body, Controller, Delete, Get, Patch, Post, Put, UseInterceptors } from "@nestjs/common";
-import { CreateUserDto } from "./DTO/create-user.dto";
-import { UpdatePutUserDto } from "./DTO/update-put-user.dto";
+import { CreateUserDto } from "./DTO/create_user.dto";
+import { UpdatePutUserDto } from "./DTO/update_put-user.dto";
 import { UserService } from "./user.service";
-import { UpdatePatchUserDto } from "./DTO/update-patch-user.dto";
+import { UpdatePatchUserDto } from "./DTO/update_patch-user.dto";
 import { LogInterceptor } from "src/Interceptors/log.interceptors";
-import { ParamId } from "src/decorators/param-id.decorator";
+import { ParamId } from "src/decorators/param_id.decorator";
 
 
 @UseInterceptors(LogInterceptor)
