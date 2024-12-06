@@ -1,8 +1,7 @@
 import { IsString } from "class-validator";
-import { AuthLoginDto } from "./auth_login.dto";
+import { CreateUserDto } from "src/user/DTO/create_user.dto";
 
 
-export class AuthRegisterDto extends AuthLoginDto{
-    @IsString()
-    name: string
+export class AuthRegisterDto extends CreateUserDto{
+
 }

@@ -15,7 +15,7 @@ export class AuthController{
 
     @Post("login")
     async Login(@Body() body : AuthLoginDto){
-
+        return this.authService.Login(body.email,body.password)
     }
 
     
