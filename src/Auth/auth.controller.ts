@@ -3,7 +3,7 @@ import { AuthLoginDto } from "./dto/auth_login.dto";
 import { AuthRegisterDto } from "./dto/auth_register.dto";
 import { AuthForgetDto } from "./dto/auth_forget.dto";
 import { UserService } from "src/user/user.service";
-import { Authservice as AuthService } from "./auth.service";
+import { AuthService as AuthService } from "./auth.service";
 import { AuthResetDto } from "./dto/auth_reset.dto";
 
 
@@ -21,7 +21,7 @@ export class AuthController{
     
     @Post("register")
     async Register(@Body() body : AuthRegisterDto){
-        return this.userService.Create(body);
+        return this.authService.Register(body);
     }
     @Post("forget")
     async Forget(@Body() body : AuthForgetDto){
