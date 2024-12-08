@@ -1,20 +1,24 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { BadRequestException, Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { Prisma, User } from "@prisma/client";
 import { PrismaService } from "src/Prisma/prisma.service";
 import { AuthRegisterDto } from "./dto/auth_register.dto";
 import { UserService } from "src/user/user.service";
-
+import * as bcrypt from "bcrypt";
 
 @Injectable({})
 export class AuthService{
+
+    private audience: string = "users";
+    private issuer: string = "login";
+
     constructor(
         private readonly jwtService: JwtService, 
         private readonly prismaService : PrismaService,
         private readonly userService: UserService
     ) {}
 
-    async CreateToken(user: User){
+    CreateToken(user: User){
         return {accessToken: this.jwtService.sign({
             id: user.id,
             name: user.name,
@@ -24,31 +28,54 @@ export class AuthService{
         {
             expiresIn: "7 days" ,
             subject: String(user.id),
-            issuer: "API, NestJS",
-            audience: "users",
+            issuer: this.issuer,
+            audience: this.audience,
             
 
         })};
     }
 
-    async CheckToken(){
-        //return this.jwtService.verify()
+    CheckToken(token: string){
+        try{
+            const data = this.jwtService.verify(token,{
+                audience: this.audience,
+                issuer: this.issuer
+            });
+
+            return data
+        }
+        catch(ex){
+            throw new BadRequestException(ex);
+        }
+
     }
+    async IsValidToken(token: string){
+        try{
+            this.CheckToken(token);
+            return true;
+        }
+        catch(ex){
+            return false;
+        }
+    }
+
 
     async Login(email : string,password: string){
         const user = await this.prismaService.user.findFirst({
             where:{
                 email,
-                password
             }
         })
+        const passwordTest = await bcrypt.compare(password, user.password);
 
-        if(!user){
+        if(!user && !passwordTest){
             throw new UnauthorizedException("Email ou senha incorreto");
         }
 
+
         return this.CreateToken(user)
     }
+
 
     async Reset(password: string, token : string){
         const id =0
