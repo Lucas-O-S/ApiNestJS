@@ -5,6 +5,7 @@ import { PrismaService } from "src/Prisma/prisma.service";
 import { AuthRegisterDto } from "./dto/auth_register.dto";
 import { UserService } from "src/user/user.service";
 import * as bcrypt from "bcrypt";
+import { join } from "path";
 
 @Injectable({})
 export class AuthService{
@@ -17,6 +18,8 @@ export class AuthService{
         private readonly prismaService : PrismaService,
         private readonly userService: UserService
     ) {}
+
+
 
     CreateToken(user: User){
         return {accessToken: this.jwtService.sign({

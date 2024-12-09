@@ -1,3 +1,4 @@
 
 DATABASE_URL=""
 JWT_SECRET = ""
+PHOTO_PATH="" #Path begin in file/file.service.ts
