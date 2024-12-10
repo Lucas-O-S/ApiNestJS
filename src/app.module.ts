@@ -5,6 +5,8 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './Auth/auth.module';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { ConfigModule } from '@nestjs/config';
+import { MailerModule} from '@nestjs-modules/mailer';
+import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
 
 @Module({
   imports: [
@@ -16,7 +18,20 @@ import { ConfigModule } from '@nestjs/config';
     }]
   }) ,
   forwardRef(()=> UserModule), 
-  forwardRef(()=> AuthModule)
+  forwardRef(()=> AuthModule),
+  MailerModule.forRoot({
+    transport: 'smtps://trevor.casper@ethereal.email:WVVyS6PXgePFBsBTzv@smtp.ethereal.email',
+    defaults: {
+      from: '"nest-modules" <trevor.casper@ethereal.email>',
+    },
+    template: {
+      dir: __dirname + '/templates',
+      adapter: new PugAdapter(),
+      options: {
+        strict: true,
+      },
+    },
+  })
 ],
   controllers: [AppController],
   providers: [AppService],

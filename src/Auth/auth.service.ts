@@ -6,6 +6,7 @@ import { AuthRegisterDto } from "./dto/auth_register.dto";
 import { UserService } from "src/user/user.service";
 import * as bcrypt from "bcrypt";
 import { join } from "path";
+import { MailerService } from "@nestjs-modules/mailer";
 
 @Injectable({})
 export class AuthService{
@@ -16,7 +17,8 @@ export class AuthService{
     constructor(
         private readonly jwtService: JwtService, 
         private readonly prismaService : PrismaService,
-        private readonly userService: UserService
+        private readonly userService: UserService,
+        private readonly mailer: MailerService
     ) {}
 
 
@@ -95,7 +97,7 @@ export class AuthService{
     }
 
     async Forget(email: string){
-        const user = this.prismaService.user.findFirst({
+        const user = await this.prismaService.user.findFirst({
             where:{
                 email,
             }
@@ -104,8 +106,29 @@ export class AuthService{
         if(!user){
             throw new UnauthorizedException("Email incorreto");
         }
+        const token = this.jwtService.sign(
+            {
+                id: user.id
+            },
+            {
+                expiresIn: "30 minutes",
+                subject: String(user.id),
+                issuer: "forget",
+                audience: "user",
+            }
+        );
 
-        return user
+        await this.mailer.sendMail({
+            subject: "Recuperação de senha",
+            to: "trevor.casper@ethereal.email",
+            template: "forget",
+            context: {
+                name :  user.name,
+                token 
+            }
+        });
+
+        return user;
     }
 
     async Register(data: AuthRegisterDto){
