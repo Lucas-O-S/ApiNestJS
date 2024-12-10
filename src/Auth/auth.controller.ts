@@ -24,6 +24,7 @@ export class AuthController{
         private readonly fileService: FileService
     ){}
 
+    @UseGuards(AuthGuard)
     @Post("login")
     async Login(@Body() body : AuthLoginDto){
         return this.authService.Login(body.email,body.password)

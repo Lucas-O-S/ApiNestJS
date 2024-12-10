@@ -39,6 +39,8 @@ export class UserService{
 
     async Update({email, name, password, role} : UpdatePutUserDto, id:number){
         await this.exist(id);
+        
+        password = await bcrypt.hash(password, await bcrypt.genSalt());
 
         return this.prisma.user.update({
             data: {email, name, password, role},
@@ -49,6 +51,10 @@ export class UserService{
     }
     async UpdatePartial({email, name, password, role} : UpdatePatchUserDto, id:number){
         await this.exist(id);
+        if(!password){
+            password = await bcrypt.hash(password, await bcrypt.genSalt());
+
+        }
 
         return this.prisma.user.update({
 

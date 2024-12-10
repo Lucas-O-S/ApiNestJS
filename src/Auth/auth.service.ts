@@ -5,7 +5,6 @@ import { PrismaService } from "src/Prisma/prisma.service";
 import { AuthRegisterDto } from "./dto/auth_register.dto";
 import { UserService } from "src/user/user.service";
 import * as bcrypt from "bcrypt";
-import { join } from "path";
 import { MailerService } from "@nestjs-modules/mailer";
 
 @Injectable({})
@@ -83,17 +82,36 @@ export class AuthService{
 
 
     async Reset(password: string, token : string){
-        const id =0
 
-        const user = await this.prismaService.user.update({
-            where: {
-                id
-            },
-            data: {
-                password
+
+        try{
+            
+            const data : any= this.jwtService.verify(token,{
+                audience: "users",
+                issuer: "forget",
+            });
+
+            if(isNaN(Number(data.id))){
+                throw new BadRequestException("Token invalido")
             }
-        });
-        return this.CreateToken(user)
+
+            const user = await this.prismaService.user.update({
+                where: {
+                    id: Number(data.id)
+                },
+                data: {
+                    password: await bcrypt.hash(password, await bcrypt.genSalt())
+
+                }
+            });
+
+            return this.CreateToken(user)
+        }
+        catch(ex){
+            throw new BadRequestException(ex);
+        }
+
+
     }
 
     async Forget(email: string){
@@ -102,7 +120,6 @@ export class AuthService{
                 email,
             }
         })
-
         if(!user){
             throw new UnauthorizedException("Email incorreto");
         }
@@ -114,13 +131,13 @@ export class AuthService{
                 expiresIn: "30 minutes",
                 subject: String(user.id),
                 issuer: "forget",
-                audience: "user",
+                audience: "users",
             }
         );
 
         await this.mailer.sendMail({
             subject: "Recuperação de senha",
-            to: "trevor.casper@ethereal.email",
+            to: "bobbie.oberbrunner@ethereal.email",
             template: "forget",
             context: {
                 name :  user.name,
