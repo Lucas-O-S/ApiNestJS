@@ -1,11 +1,12 @@
 import { BadRequestException, Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
-import { Prisma, User } from "@prisma/client";
-import { PrismaService } from "src/Prisma/prisma.service";
 import { AuthRegisterDto } from "./dto/auth_register.dto";
 import { UserService } from "src/user/user.service";
 import * as bcrypt from "bcrypt";
 import { MailerService } from "@nestjs-modules/mailer";
+import { InjectRepository } from "@nestjs/typeorm";
+import { UserEntity } from "src/user/entity/user.entity";
+import { Repository } from "typeorm";
 
 @Injectable({})
 export class AuthService{
@@ -15,14 +16,15 @@ export class AuthService{
 
     constructor(
         private readonly jwtService: JwtService, 
-        private readonly prismaService : PrismaService,
+        @InjectRepository(UserEntity)
+        private userRepository: Repository<UserEntity>,
         private readonly userService: UserService,
         private readonly mailer: MailerService
     ) {}
 
 
 
-    CreateToken(user: User){
+    CreateToken(user: UserEntity){
         return {accessToken: this.jwtService.sign({
             id: user.id,
             name: user.name,
@@ -65,7 +67,7 @@ export class AuthService{
 
 
     async Login(email : string,password: string){
-        const user = await this.prismaService.user.findFirst({
+        const user = await this.userRepository.findOne({
             where:{
                 email,
             }
@@ -95,17 +97,14 @@ export class AuthService{
                 throw new BadRequestException("Token invalido")
             }
 
-            const user = await this.prismaService.user.update({
-                where: {
-                    id: Number(data.id)
-                },
-                data: {
-                    password: await bcrypt.hash(password, await bcrypt.genSalt())
+            const user = await this.userRepository.update(
+            data.id,
+            {
 
-                }
+                password: await bcrypt.hash(password, await bcrypt.genSalt())
             });
 
-            return this.CreateToken(user)
+            return this.CreateToken(await this.userService.Show(data.id))
         }
         catch(ex){
             throw new BadRequestException(ex);
@@ -115,7 +114,7 @@ export class AuthService{
     }
 
     async Forget(email: string){
-        const user = await this.prismaService.user.findFirst({
+        const user = await this.userRepository.findOne({
             where:{
                 email,
             }
