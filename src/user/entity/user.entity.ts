@@ -29,10 +29,10 @@ export class UserEntity{
     password:string;
     
     @CreateDateColumn()
-    created_at: string;
+    created_at?: Date;
 
     @UpdateDateColumn()
-    update_at: string;
+    update_at?: Date;
 
     @Column({
         enum:[1,2]
