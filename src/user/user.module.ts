@@ -1,8 +1,8 @@
 import { forwardRef, MiddlewareConsumer, Module, NestModule, RequestMethod } from "@nestjs/common";
 import { UserController } from "./user.controller";
 import { UserService } from "./user.service";
-import { UserIdCheckMiddleware } from "src/Middlewares/user_id-check.middleware";
-import { AuthModule } from "src/Auth/auth.module";
+import { UserIdCheckMiddleware } from "../Middlewares/user_id-check.middleware";
+import { AuthModule } from "../Auth/auth.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { UserEntity } from "./entity/user.entity";
 

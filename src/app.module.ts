@@ -35,7 +35,7 @@ import { UserEntity } from './user/entity/user.entity';
       from: '"nest-modules" <bobbie.oberbrunner@ethereal.email>',
     },
     template: {
-      dir: __dirname + '/../Templates',
+      dir: __dirname + '/../../Templates',
       adapter: new PugAdapter(),
       options: {
         strict: true,

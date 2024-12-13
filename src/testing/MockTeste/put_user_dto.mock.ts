@@ -1,5 +1,5 @@
-import { UpdatePutUserDto } from "../user/DTO/update_put-user.dto";
-import { Role } from "../enums/role.enum";
+import { UpdatePutUserDto } from "../../user/DTO/update_put-user.dto";
+import { Role } from "../../enums/role.enum";
 
 export const MockUserPut:UpdatePutUserDto ={
     email: "email2@a.com",

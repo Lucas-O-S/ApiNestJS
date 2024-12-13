@@ -2,16 +2,16 @@ import { BadRequestException, Body, Controller, FileTypeValidator, MaxFileSizeVa
 import { AuthLoginDto } from "./dto/auth_login.dto";
 import { AuthRegisterDto } from "./dto/auth_register.dto";
 import { AuthForgetDto } from "./dto/auth_forget.dto";
-import { UserService } from "src/user/user.service";
+import { UserService } from "../user/user.service";
 import { AuthService as AuthService } from "./auth.service";
 import { AuthResetDto } from "./dto/auth_reset.dto";
-import { AuthGuard } from "src/Guards/auth.guard";
-import { User } from "src/decorators/param_user.decorator";
+import { AuthGuard } from "../Guards/auth.guard";
+import { User } from "../decorators/param_user.decorator";
 import { FileInterceptor, FilesInterceptor } from "@nestjs/platform-express";
 import { writeFile } from "fs/promises";
 import { join } from "path";
 import { count } from "console";
-import { FileService } from "src/file/file.service";
+import { FileService } from "../file/file.service";
 
 
 

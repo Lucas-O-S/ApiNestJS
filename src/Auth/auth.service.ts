@@ -1,12 +1,13 @@
 import { BadRequestException, Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { AuthRegisterDto } from "./dto/auth_register.dto";
-import { UserService } from "src/user/user.service";
+import { UserService } from "../user/user.service";
 import * as bcrypt from "bcrypt";
 import { MailerService } from "@nestjs-modules/mailer";
 import { InjectRepository } from "@nestjs/typeorm";
-import { UserEntity } from "src/user/entity/user.entity";
+import { UserEntity } from "../user/entity/user.entity";
 import { Repository } from "typeorm";
+import { count } from "console";
 
 @Injectable({})
 export class AuthService{
@@ -57,7 +58,7 @@ export class AuthService{
     }
     async IsValidToken(token: string){
         try{
-            this.CheckToken(token);
+            await this.CheckToken(token);
             return true;
         }
         catch(ex){
@@ -88,23 +89,22 @@ export class AuthService{
 
         try{
             
-            const data : any= this.jwtService.verify(token,{
+            const data : UserEntity = await this.jwtService.verify(token,{
                 audience: "users",
                 issuer: "forget",
             });
+             if(isNaN(Number(data.id))){
 
-            if(isNaN(Number(data.id))){
                 throw new BadRequestException("Token invalido")
             }
+            await this.userRepository.update(
+                data.id,
+                {
 
-            const user = await this.userRepository.update(
-            data.id,
-            {
-
-                password: await bcrypt.hash(password, await bcrypt.genSalt())
-            });
-
+                    password: await bcrypt.hash(password, await bcrypt.genSalt())
+                });
             return this.CreateToken(await this.userService.Show(data.id))
+
         }
         catch(ex){
             throw new BadRequestException(ex);
@@ -142,14 +142,14 @@ export class AuthService{
                 name :  user.name,
                 token 
             }
+            
         });
-
         return user;
     }
 
     async Register(data: AuthRegisterDto){
         const user = await this.userService.Create(data)
-
+        console.log(data)
         return this.CreateToken(user)
     }
 }

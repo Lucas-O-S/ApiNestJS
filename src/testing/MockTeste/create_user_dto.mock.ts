@@ -1,5 +1,5 @@
-import { Role } from "../enums/role.enum";
-import { CreateUserDto } from "src/user/DTO/create_user.dto";
+import { Role } from "../../enums/role.enum";
+import { CreateUserDto } from "../../user/DTO/create_user.dto";
 
 export const MockUserCreate:CreateUserDto ={
     email: "email@a.com",

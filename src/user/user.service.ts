@@ -34,7 +34,7 @@ export class UserService{
     }
 
     async Show(id : number){
-        await this.exist(id);
+        await this.Exist(id);
 
         return this.userRepository.findOne({
             where : {
@@ -44,7 +44,7 @@ export class UserService{
     }
 
     async Update({email, name, password, role} : UpdatePutUserDto, id:number){
-        await this.exist(id);
+        await this.Exist(id);
         
         password = await bcrypt.hash(password, await bcrypt.genSalt());
 
@@ -55,7 +55,7 @@ export class UserService{
         return await this.userRepository.findOneBy({id})
     }
     async UpdatePartial({email, name, password, role} : UpdatePatchUserDto, id:number){
-        await this.exist(id);
+        await this.Exist(id);
         if(password){
             password = await bcrypt.hash(password, await bcrypt.genSalt());
 
@@ -69,12 +69,12 @@ export class UserService{
     }
 
     async Delete(id: number ){
-        await this.exist(id);
+        await this.Exist(id);
         return this.userRepository.delete(id)
  
     }
 
-    private async exist(id: number){
+    private async Exist(id: number){
         if(!( await this.userRepository.exists({
             where: {
                 id
