@@ -71,7 +71,7 @@ export class UserService{
     async Delete(id: number ){
         await this.Exist(id);
         return this.userRepository.delete(id)
- 
+        
     }
 
     private async Exist(id: number){

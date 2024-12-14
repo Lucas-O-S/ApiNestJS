@@ -8,9 +8,6 @@ import { AuthResetDto } from "./dto/auth_reset.dto";
 import { AuthGuard } from "../Guards/auth.guard";
 import { User } from "../decorators/param_user.decorator";
 import { FileInterceptor, FilesInterceptor } from "@nestjs/platform-express";
-import { writeFile } from "fs/promises";
-import { join } from "path";
-import { count } from "console";
 import { FileService } from "../file/file.service";
 
 

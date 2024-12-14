@@ -1,5 +1,4 @@
 import { UserService } from "../../user/user.service";
-import { ForgetTokenMock } from "../MockClassesTeste/forget_token.mock";
 import { acessTokenMock } from "../MockClassesTeste/token.mock";
 import { userEntityList } from "../MockClassesTeste/user_entity_list.mock";
 
@@ -12,18 +11,18 @@ export const UserServiceMock ={
 
         Create: jest.fn().mockReturnValue(userEntityList[0]),
    
-        List: jest.fn(),
+        List: jest.fn().mockReturnValue(userEntityList),
   
         Show: jest.fn().mockReturnValue(userEntityList[0]),
   
   
-        Update: jest.fn(),
+        Update: jest.fn().mockReturnValue(userEntityList[0]),
   
   
-        UpdatePartial: jest.fn(),
+        UpdatePartial: jest.fn().mockReturnValue(userEntityList[0]),
   
   
-        Delete: jest.fn(),
+        Delete: jest.fn().mockReturnValue(true),
   
   
         Exist: jest.fn(),

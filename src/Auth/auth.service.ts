@@ -7,7 +7,6 @@ import { MailerService } from "@nestjs-modules/mailer";
 import { InjectRepository } from "@nestjs/typeorm";
 import { UserEntity } from "../user/entity/user.entity";
 import { Repository } from "typeorm";
-import { count } from "console";
 
 @Injectable({})
 export class AuthService{
