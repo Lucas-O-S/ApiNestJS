@@ -1,16 +1,14 @@
-import { join } from "path";
-import { FileService } from "../../file/file.service";
-
+import { join } from 'path';
+import { FileService } from '../../file/file.service';
 
 export const FileServiceMock = {
-    provide: FileService,
+  provide: FileService,
 
-    useValue:{
-        CreatePath: jest.fn().mockReturnValue(join(__dirname, "../storage/photos/photo-5.jpg")),
+  useValue: {
+    CreatePath: jest
+      .fn()
+      .mockReturnValue(join(__dirname, '../storage/photos/photo-5.jpg')),
 
-        Upload: jest.fn()
-    }
-
-
-
-}
+    Upload: jest.fn(),
+  },
+};

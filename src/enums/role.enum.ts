@@ -1,7 +1,4 @@
-
-
-
-export enum Role{
-    User=1,
-    Admim=2
+export enum Role {
+  User = 1,
+  Admim = 2,
 }
