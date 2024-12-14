@@ -1,7 +1,7 @@
 import { UserService } from "../../user/user.service";
-import { ForgetTokenMock } from "../MockTeste/forget_token.mock";
-import { acessTokenMock } from "../MockTeste/token.mock";
-import { userEntityList } from "../MockTeste/user_entity_list.mock";
+import { ForgetTokenMock } from "../MockClassesTeste/forget_token.mock";
+import { acessTokenMock } from "../MockClassesTeste/token.mock";
+import { userEntityList } from "../MockClassesTeste/user_entity_list.mock";
 
 export const UserServiceMock ={
          

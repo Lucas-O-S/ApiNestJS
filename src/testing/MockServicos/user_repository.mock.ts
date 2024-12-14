@@ -1,6 +1,6 @@
 import { getRepositoryToken } from "@nestjs/typeorm";
 import { UserEntity } from "../../user/entity/user.entity";
-import { userEntityList } from "../MockTeste/user_entity_list.mock";
+import { userEntityList } from "../MockClassesTeste/user_entity_list.mock";
 
 
 

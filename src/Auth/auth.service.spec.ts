@@ -4,12 +4,12 @@ import { userRepositoryMock } from "../testing/MockServicos/user_repository.mock
 import { UserServiceMock } from "../testing/MockServicos/user_service_dto.mock"
 import { JwtServiceMock } from "../testing/MockServicos/jwt_service.mock.mock"
 import { MailerServiceMock } from "../testing/MockServicos/mailer_service.mock"
-import { acessTokenMock } from "../testing/MockTeste/token.mock"
-import { jwtPayload } from "../testing/MockTeste/jwt_payload.mock"
-import { userEntityList } from "../testing/MockTeste/user_entity_list.mock"
-import { ForgetTokenMock } from "../testing/MockTeste/forget_token.mock"
-import { ForgetJwtPayload } from "../testing/MockTeste/forget_jwt_payload.mock"
-import { UserDtoMock } from "../testing/MockTeste/auth_dto_mock"
+import { acessTokenMock } from "../testing/MockClassesTeste/token.mock"
+import { jwtPayload } from "../testing/MockClassesTeste/jwt_payload.mock"
+import { userEntityList } from "../testing/MockClassesTeste/user_entity_list.mock"
+import { ForgetTokenMock } from "../testing/MockClassesTeste/forget_token.mock"
+import { ForgetJwtPayload } from "../testing/MockClassesTeste/forget_jwt_payload.mock"
+import { UserDtoMock } from "../testing/MockClassesTeste/auth_dto_mock"
 
 describe("AuthSevice", ()=>{
 

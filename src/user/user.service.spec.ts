@@ -1,13 +1,13 @@
 import { Test, TestingModule } from "@nestjs/testing"
 import { UserService } from "./user.service"
 import { userRepositoryMock } from "../testing/MockServicos/user_repository.mock"
-import { MockUserCreate } from "../testing/MockTeste/create_user_dto.mock"
-import { userEntityList } from "../testing/MockTeste/user_entity_list.mock"
+import { MockUserCreate } from "../testing/MockClassesTeste/create_user_dto.mock"
+import { userEntityList } from "../testing/MockClassesTeste/user_entity_list.mock"
 import { Repository } from "typeorm"
 import { UserEntity } from "./entity/user.entity"
 import { getRepositoryToken } from "@nestjs/typeorm"
-import { MockUserPatch } from "../testing/MockTeste/Pacth_user_dto.mock"
-import { MockUserPut } from "../testing/MockTeste/put_user_dto.mock"
+import { MockUserPatch } from "../testing/MockClassesTeste/Pacth_user_dto.mock"
+import { MockUserPut } from "../testing/MockClassesTeste/put_user_dto.mock"
 
 
 

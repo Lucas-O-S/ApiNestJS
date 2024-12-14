@@ -1,6 +1,6 @@
  import { JwtService } from "@nestjs/jwt";
-import { acessTokenMock } from "../MockTeste/token.mock";
-import { jwtPayload } from "../MockTeste/jwt_payload.mock";
+import { acessTokenMock } from "../MockClassesTeste/token.mock";
+import { jwtPayload } from "../MockClassesTeste/jwt_payload.mock";
 
 
 
